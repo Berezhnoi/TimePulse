@@ -22,16 +22,30 @@ const Tab = createMaterialBottomTabNavigator<TabStackParamsList>();
 function TabStackScreens() {
   return (
     <Tab.Navigator initialRouteName={SCREENS.Home}>
-      <Tab.Screen name={SCREENS.Home} component={HomeScreen} />
-      <Tab.Screen name={SCREENS.TimeLog} component={TimeLogScreen} />
+      <Tab.Screen
+        name={SCREENS.Home}
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: () => <MaterialCommunityIcons name="home" size={26} />,
+        }}
+      />
+      <Tab.Screen
+        name={SCREENS.TimeLog}
+        component={TimeLogScreen}
+        options={{
+          tabBarLabel: 'Time Log',
+          tabBarIcon: () => (
+            <MaterialCommunityIcons name="clock-outline" size={26} />
+          ),
+        }}
+      />
       <Tab.Screen
         name={SCREENS.Profile}
         component={ProfileScreen}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
-          ),
+          tabBarIcon: () => <MaterialCommunityIcons name="account" size={26} />,
         }}
       />
     </Tab.Navigator>
