@@ -33,6 +33,12 @@
       "store/*": [
         "./store/*"
       ],
+      "theme/*": [
+        "./theme/*"
+      ],
+      "styles/*": [
+        "./styles/*"
+      ],
     },
     "types": [
       "node"

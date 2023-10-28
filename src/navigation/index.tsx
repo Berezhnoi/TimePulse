@@ -63,7 +63,7 @@ function AuthStackScreens() {
 }
 
 const Navigator = () => {
-  const isSignedIn: boolean = false;
+  const isSignedIn: boolean = true;
 
   return (
     <NavigationContainer>

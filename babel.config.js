@@ -20,6 +20,8 @@ module.exports = {
           types: './src/types',
           utils: './src/utils',
           store: './src/store',
+          theme: './src/theme',
+          styles: './src/styles',
         },
       },
     ],
