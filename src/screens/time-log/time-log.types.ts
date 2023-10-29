@@ -1,8 +1,11 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {TabStackParamsList} from 'types/navigation';
+import {TimesheetStackParamsList} from 'types/navigation';
 import {SCREENS} from 'config/screens';
 
-export type TimeLogScreenProps = NativeStackScreenProps<
-  TabStackParamsList,
-  SCREENS.TimeLog
->;
+export type TimeLogScreenProps = NativeStackScreenProps<TimesheetStackParamsList, SCREENS.TimeLog>;
+
+export interface TimeLogForm {
+  selectedDate: string;
+  dailyLog: number;
+  notes: string;
+}

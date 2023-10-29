@@ -5,7 +5,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
 // Screens
-import {HomeScreen, LoginScreen, ProfileScreen, TimeLogScreen} from 'screens';
+import {
+  HomeScreen,
+  LoginScreen,
+  ProfileScreen,
+  TimesheetScreen,
+  TimeLogScreen,
+} from 'screens';
 
 // Components
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,10 +20,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {SCREENS} from 'config';
 
 // Types
-import {AuthStackParamsList, TabStackParamsList} from 'types/navigation';
+import {
+  AuthStackParamsList,
+  TabStackParamsList,
+  TimesheetStackParamsList,
+} from 'types/navigation';
 
 const AuthStack = createNativeStackNavigator<AuthStackParamsList>();
+
 const Tab = createMaterialBottomTabNavigator<TabStackParamsList>();
+const TimesheetStack = createNativeStackNavigator<TimesheetStackParamsList>();
 
 function TabStackScreens() {
   return (
@@ -31,10 +43,10 @@ function TabStackScreens() {
         }}
       />
       <Tab.Screen
-        name={SCREENS.TimeLog}
-        component={TimeLogScreen}
+        name={SCREENS.Timesheet}
+        component={TimesheetStackScreens}
         options={{
-          tabBarLabel: 'Time Log',
+          tabBarLabel: 'Timesheet',
           tabBarIcon: () => (
             <MaterialCommunityIcons name="clock-outline" size={26} />
           ),
@@ -49,6 +61,20 @@ function TabStackScreens() {
         }}
       />
     </Tab.Navigator>
+  );
+}
+
+function TimesheetStackScreens() {
+  return (
+    <TimesheetStack.Navigator
+      screenOptions={{headerShown: false}}
+      initialRouteName={SCREENS.TimesheetMain}>
+      <TimesheetStack.Screen
+        name={SCREENS.TimesheetMain}
+        component={TimesheetScreen}
+      />
+      <TimesheetStack.Screen name={SCREENS.TimeLog} component={TimeLogScreen} />
+    </TimesheetStack.Navigator>
   );
 }
 

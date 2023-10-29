@@ -8,6 +8,10 @@ const styles = StyleSheet.create({
   ...flexStyles,
   ...marginStyles,
   ...paddingStyles,
+
+  required: {
+    color: '#B90808',
+  },
 });
 
 export default styles;
