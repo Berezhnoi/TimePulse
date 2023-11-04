@@ -1,5 +1,6 @@
 // Libs
-import React from 'react';
+import React, {useEffect} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 
 // Providers
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -14,6 +15,10 @@ import Navigator from 'navigation/index';
 import {store, persistor} from 'store/index';
 
 function App(): JSX.Element {
+  useEffect(() => {
+    setTimeout(() => SplashScreen.hide(), 1000);
+  }, []);
+
   return (
     <SafeAreaProvider>
       <Provider store={store}>
