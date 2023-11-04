@@ -10,9 +10,14 @@ import CalendarModal from 'components/calendar-modal';
 
 // Hooks
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useAppDispatch, useAppSelector} from 'store';
+
+// Actions
+import {addTimeLog} from 'store/slices/timeLogsSlice';
 
 // Utils
 import {isNumeric} from 'utils';
+import {TimeLogDTO} from 'utils/TimeLogDTO';
 
 // Config
 import {SCREENS} from 'config/screens';
@@ -26,6 +31,10 @@ import styles from './time-log.styles';
 
 const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
   const insets = useSafeAreaInsets();
+
+  const dispatch = useAppDispatch();
+
+  const user = useAppSelector(state => state.user);
 
   const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
   const [dailyLog, setDailyLog] = useState<string>('');
@@ -71,6 +80,13 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
       });
       return;
     }
+
+    if (!user.id) return;
+
+    const timeLog = new TimeLogDTO(Number(dailyLog), Number(new Date(selectedDate)), notes);
+
+    dispatch(addTimeLog({userId: user.id, timeLog: timeLog}));
+
     navigation.navigate(SCREENS.TimesheetMain);
   };
 

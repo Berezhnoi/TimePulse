@@ -19,19 +19,20 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login: (__, action: PayloadAction<UserState>) => {
-      return action.payload;
+    login: (__, action: PayloadAction<User>) => {
+      return {...action.payload, isSignedIn: true};
     },
 
-    updateUser: (
-      userState: UserState,
-      action: PayloadAction<Partial<UserState>>,
-    ) => {
+    updateUser: (userState: UserState, action: PayloadAction<Partial<UserState>>) => {
       return {...userState, ...action.payload};
+    },
+
+    logout(userState: UserState) {
+      return {...userState, isSignedIn: false};
     },
   },
 });
 
-export const {login, updateUser} = userSlice.actions;
+export const {login, updateUser, logout} = userSlice.actions;
 
 export default userSlice;

@@ -5,26 +5,19 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
 // Screens
-import {
-  HomeScreen,
-  LoginScreen,
-  ProfileScreen,
-  TimesheetScreen,
-  TimeLogScreen,
-} from 'screens';
+import {HomeScreen, LoginScreen, ProfileScreen, TimesheetScreen, TimeLogScreen} from 'screens';
 
 // Components
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+// Hooks
+import {useAppSelector} from 'store';
 
 // Config
 import {SCREENS} from 'config';
 
 // Types
-import {
-  AuthStackParamsList,
-  TabStackParamsList,
-  TimesheetStackParamsList,
-} from 'types/navigation';
+import {AuthStackParamsList, TabStackParamsList, TimesheetStackParamsList} from 'types/navigation';
 
 const AuthStack = createNativeStackNavigator<AuthStackParamsList>();
 
@@ -47,9 +40,7 @@ function TabStackScreens() {
         component={TimesheetStackScreens}
         options={{
           tabBarLabel: 'Timesheet',
-          tabBarIcon: () => (
-            <MaterialCommunityIcons name="clock-outline" size={26} />
-          ),
+          tabBarIcon: () => <MaterialCommunityIcons name="clock-outline" size={26} />,
         }}
       />
       <Tab.Screen
@@ -66,13 +57,8 @@ function TabStackScreens() {
 
 function TimesheetStackScreens() {
   return (
-    <TimesheetStack.Navigator
-      screenOptions={{headerShown: false}}
-      initialRouteName={SCREENS.TimesheetMain}>
-      <TimesheetStack.Screen
-        name={SCREENS.TimesheetMain}
-        component={TimesheetScreen}
-      />
+    <TimesheetStack.Navigator screenOptions={{headerShown: false}} initialRouteName={SCREENS.TimesheetMain}>
+      <TimesheetStack.Screen name={SCREENS.TimesheetMain} component={TimesheetScreen} />
       <TimesheetStack.Screen name={SCREENS.TimeLog} component={TimeLogScreen} />
     </TimesheetStack.Navigator>
   );
@@ -80,22 +66,16 @@ function TimesheetStackScreens() {
 
 function AuthStackScreens() {
   return (
-    <AuthStack.Navigator
-      screenOptions={{headerShown: false}}
-      initialRouteName={SCREENS.Login}>
+    <AuthStack.Navigator screenOptions={{headerShown: false}} initialRouteName={SCREENS.Login}>
       <AuthStack.Screen name={SCREENS.Login} component={LoginScreen} />
     </AuthStack.Navigator>
   );
 }
 
 const Navigator = () => {
-  const isSignedIn: boolean = true;
+  const isSignedIn: boolean = useAppSelector(state => state.user.isSignedIn);
 
-  return (
-    <NavigationContainer>
-      {isSignedIn ? <TabStackScreens /> : <AuthStackScreens />}
-    </NavigationContainer>
-  );
+  return <NavigationContainer>{isSignedIn ? <TabStackScreens /> : <AuthStackScreens />}</NavigationContainer>;
 };
 
 export default Navigator;

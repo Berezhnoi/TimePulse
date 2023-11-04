@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 32,
     paddingBottom: 20,
+    flexGrow: 1,
   },
   header: {
     paddingTop: 20,
@@ -14,6 +15,10 @@ const styles = StyleSheet.create({
     width: 120,
     borderRadius: 8,
     backgroundColor: colors.orangered,
+    marginLeft: 'auto',
+  },
+  logOutButton: {
+    marginTop: 'auto',
     marginLeft: 'auto',
   },
 });

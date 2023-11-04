@@ -8,6 +8,10 @@ import MaskInput from 'react-native-mask-input';
 
 // Hooks
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useAppDispatch} from 'store';
+
+// Actions
+import {logout} from 'store/slices/userSlice';
 
 // Config
 import {GermanyPhoneNumberMask} from 'config/mask';
@@ -21,6 +25,8 @@ import styles from './profile.styles';
 
 const ProfileScreen: React.FC<ProfileScreenProps> = () => {
   const insets = useSafeAreaInsets();
+
+  const dispatch = useAppDispatch();
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
@@ -37,6 +43,10 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
 
   const onChangeField = (fieldKey: keyof typeof values, fieldValue: (typeof values)[keyof typeof values]): void => {
     setValues(prevState => ({...prevState, [fieldKey]: fieldValue}));
+  };
+
+  const handleLogOut = (): void => {
+    dispatch(logout());
   };
 
   return (
@@ -93,6 +103,10 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
           />
         )}
       />
+
+      <Button mode="elevated" icon="logout" style={styles.logOutButton} onPress={handleLogOut}>
+        Log out
+      </Button>
     </View>
   );
 };

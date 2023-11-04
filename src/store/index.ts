@@ -3,7 +3,7 @@ import {combineReducers} from '@reduxjs/toolkit';
 import {persistReducer, persistStore} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
-import {userSlice} from './slices';
+import {userSlice, timeLogsSlice} from './slices';
 
 const persistConfig = {
   key: 'root',
@@ -12,12 +12,10 @@ const persistConfig = {
 
 export const rootReducer = combineReducers({
   user: userSlice.reducer,
+  timeLogs: timeLogsSlice.reducer,
 });
 
-const persistedReducer = persistReducer<RootReducer>(
-  persistConfig,
-  rootReducer,
-);
+const persistedReducer = persistReducer<RootReducer>(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
