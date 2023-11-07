@@ -29,6 +29,8 @@ import {TimeLogForm, TimeLogScreenProps} from './time-log.types';
 import {commonStyles} from 'styles';
 import styles from './time-log.styles';
 
+const DATE_FORMAT = 'yyyy-MM-dd';
+
 const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
   const insets = useSafeAreaInsets();
 
@@ -36,7 +38,7 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
 
   const user = useAppSelector(state => state.user);
 
-  const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
+  const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), DATE_FORMAT));
   const [dailyLog, setDailyLog] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
 
@@ -148,8 +150,10 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
       <CalendarModal
         selectedDate={selectedDate}
         visible={visibleCalendar}
+        showOkButton
         onChangeDate={date => setSelectedDate(date)}
         hideCalendar={hideCalendar}
+        maxDate={format(new Date(), DATE_FORMAT)}
       />
     </View>
   );

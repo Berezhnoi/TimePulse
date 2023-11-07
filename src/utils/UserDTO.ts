@@ -5,8 +5,8 @@ import {uniqueId} from 'utils';
 import {User} from 'types/models/user';
 
 export class UserDTO implements User {
-  private readonly _id: string;
-  private readonly _username: string;
+  readonly id: string;
+  readonly username: string;
 
   /**
    * Create a new UserDTO instance
@@ -14,15 +14,7 @@ export class UserDTO implements User {
    * @param {string} username - The username of the user
    */
   constructor(username: string) {
-    this._id = uniqueId();
-    this._username = username;
-  }
-
-  get id(): string {
-    return this._id;
-  }
-
-  get username(): string {
-    return this._username;
+    this.id = uniqueId();
+    this.username = username;
   }
 }

@@ -1,7 +1,8 @@
 // Libs
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 // Types
+import {RootState} from 'store';
 import {TimeLog} from 'types/models/time-log';
 
 export interface TimeLogsState {
@@ -59,5 +60,12 @@ const userSlice = createSlice({
 });
 
 export const {addTimeLog, editTimeLog, removeTimeLog} = userSlice.actions;
+
+export const getUserTimeLogs = createSelector(
+  (state: RootState) => (state.user.id ? state.timeLogs[state.user.id] : {}),
+  (timeLogsState = {}): TimeLog[] => {
+    return (timeLogsState as TimeLogsState[keyof TimeLogsState])?.logs || [];
+  },
+);
 
 export default userSlice;

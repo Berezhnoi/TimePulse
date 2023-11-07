@@ -73,6 +73,9 @@ const marginStyles = StyleSheet.create({
   mH10: {
     marginHorizontal: 10,
   },
+  mH15: {
+    marginHorizontal: 15,
+  },
   mH20: {
     marginHorizontal: 20,
   },

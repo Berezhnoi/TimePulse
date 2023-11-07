@@ -5,11 +5,11 @@ import {uniqueId} from 'utils';
 import {TimeLog} from 'types/models/time-log';
 
 export class TimeLogDTO implements TimeLog {
-  private readonly _id: string;
-  private readonly _loggedTime: number;
-  private readonly _loggedDate: number;
-  private readonly _createdDate: number;
-  private readonly _notes: string;
+  readonly id: string;
+  readonly loggedTime: number;
+  readonly loggedDate: number;
+  readonly createdDate: number;
+  readonly notes: string;
 
   /**
    * Create a new TimeLogDTO instance
@@ -19,31 +19,11 @@ export class TimeLogDTO implements TimeLog {
    * @param {string} notes - Additional notes or comments for the log report.
    */
   constructor(loggedTime: number, loggedDate: number, notes: string) {
-    this._id = uniqueId();
-    this._createdDate = Date.now();
+    this.id = uniqueId();
+    this.createdDate = Date.now();
 
-    this._loggedTime = loggedTime;
-    this._loggedDate = loggedDate;
-    this._notes = notes;
-  }
-
-  get id(): string {
-    return this._id;
-  }
-
-  get loggedTime(): number {
-    return this._loggedTime;
-  }
-
-  get loggedDate(): number {
-    return this._loggedDate;
-  }
-
-  get createdDate(): number {
-    return this._createdDate;
-  }
-
-  get notes(): string {
-    return this._notes;
+    this.loggedTime = loggedTime;
+    this.loggedDate = loggedDate;
+    this.notes = notes;
   }
 }

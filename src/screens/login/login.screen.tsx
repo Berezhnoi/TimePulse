@@ -35,7 +35,7 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
       username === password && users.some(user => user.toLowerCase() === username.toLowerCase());
 
     if (isValidUsername) {
-      dispatch(login(new UserDTO(username)));
+      dispatch(login({...new UserDTO(username), id: username}));
     } else {
       setValidationError(true);
     }
