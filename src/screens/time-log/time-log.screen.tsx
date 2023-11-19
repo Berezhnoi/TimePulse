@@ -4,8 +4,9 @@ import {format} from 'date-fns';
 import {de} from 'date-fns/locale';
 
 // Components
-import {View, Text, Touchable, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {Button, HelperText, TextInput} from 'react-native-paper';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CalendarModal from 'components/calendar-modal';
 
 // Hooks
@@ -106,7 +107,11 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
   };
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
+    <KeyboardAwareScrollView
+      extraScrollHeight={30}
+      enableOnAndroid={true}
+      style={commonStyles.full}
+      contentContainerStyle={[styles.container, {paddingTop: insets.top}]}>
       <Text style={[styles.section, styles.title]}>New Time Log</Text>
 
       <View style={styles.section}>
@@ -157,7 +162,7 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
         hideCalendar={hideCalendar}
         maxDate={format(new Date(), DATE_FORMAT)}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

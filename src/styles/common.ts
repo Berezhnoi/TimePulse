@@ -12,6 +12,10 @@ const styles = StyleSheet.create({
   required: {
     color: '#B90808',
   },
+  text: {
+    fontSize: 14,
+    color: '#000000d9',
+  },
 });
 
 export default styles;

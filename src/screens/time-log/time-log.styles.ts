@@ -3,6 +3,7 @@ import colors from 'theme/colors';
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
     paddingHorizontal: 32,
   },
   title: {

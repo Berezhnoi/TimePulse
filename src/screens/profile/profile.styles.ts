@@ -4,7 +4,6 @@ import colors from 'theme/colors';
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 32,
-    paddingBottom: 20,
     flexGrow: 1,
   },
   header: {
@@ -19,6 +18,7 @@ const styles = StyleSheet.create({
   },
   logOutButton: {
     marginTop: 'auto',
+    marginBottom: 20,
     marginLeft: 'auto',
   },
 });

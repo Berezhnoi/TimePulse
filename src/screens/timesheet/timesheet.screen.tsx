@@ -54,6 +54,7 @@ const TimesheetScreen: React.FC<TimesheetScreenProps> = ({navigation}) => {
           commonStyles.justifyContentSpaceBetween,
           commonStyles.alignItemsCenter,
           commonStyles.pH15,
+          commonStyles.mT10,
           commonStyles.mB10,
         ]}>
         <Text style={styles.title}>Timesheet</Text>

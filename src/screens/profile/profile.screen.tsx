@@ -5,13 +5,14 @@ import React, {useState} from 'react';
 import {View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import MaskInput from 'react-native-mask-input';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 // Hooks
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useAppDispatch} from 'store';
+import {useAppDispatch, useAppSelector} from 'store';
 
 // Actions
-import {logout} from 'store/slices/userSlice';
+import {logout, updateUser} from 'store/slices/userSlice';
 
 // Config
 import {GermanyPhoneNumberMask} from 'config/mask';
@@ -28,16 +29,19 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
 
   const dispatch = useAppDispatch();
 
+  const userData = useAppSelector(state => state.user);
+
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   const [values, setValues] = useState<{name: string; surname: string; email: string; phoneNumber: string}>({
-    name: '',
-    surname: '',
-    email: '',
-    phoneNumber: '',
+    name: userData.name || '',
+    surname: userData.surname || '',
+    email: userData.email || '',
+    phoneNumber: userData.phoneNumber || '',
   });
 
   const onSave = async (): Promise<void> => {
+    dispatch(updateUser(values));
     setIsEditMode(false);
   };
 
@@ -50,7 +54,11 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
   };
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
+    <KeyboardAwareScrollView
+      extraScrollHeight={30}
+      enableOnAndroid={true}
+      style={commonStyles.full}
+      contentContainerStyle={[styles.container, {paddingTop: insets.top}]}>
       <View style={styles.header}>
         {isEditMode ? (
           <Button icon="content-save-all-outline" mode="contained" style={styles.actionButton} onPress={onSave}>
@@ -107,7 +115,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
       <Button mode="elevated" icon="logout" style={styles.logOutButton} onPress={handleLogOut}>
         Log out
       </Button>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
