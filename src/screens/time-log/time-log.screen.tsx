@@ -4,7 +4,7 @@ import {format} from 'date-fns';
 import {de} from 'date-fns/locale';
 
 // Components
-import {View, Text} from 'react-native';
+import {View, Text, Touchable, TouchableOpacity} from 'react-native';
 import {Button, HelperText, TextInput} from 'react-native-paper';
 import CalendarModal from 'components/calendar-modal';
 
@@ -113,7 +113,9 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
         <Text style={styles.label}>
           Date <Text style={commonStyles.required}>*</Text>
         </Text>
-        <TextInput value={formatedDate} editable={false} onPressIn={showCalendar} />
+        <TouchableOpacity activeOpacity={1} onPress={showCalendar}>
+          <TextInput value={formatedDate} editable={false} />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.section}>
