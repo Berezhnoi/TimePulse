@@ -6,7 +6,7 @@ import {View} from 'react-native';
 import {Button, HelperText, TextInput} from 'react-native-paper';
 
 // Hooks
-import {useAppDispatch} from 'store';
+import {useAppDispatch, useAppSelector} from 'store';
 
 // Actions
 import {login} from 'store/slices/userSlice';
@@ -24,6 +24,8 @@ import styles from './login.styles';
 const LoginScreen: React.FC<LoginScreenProps> = () => {
   const dispatch = useAppDispatch();
 
+  const user = useAppSelector(state => state.user);
+
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -35,7 +37,8 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
       username === password && users.some(user => user.toLowerCase() === username.toLowerCase());
 
     if (isValidUsername) {
-      dispatch(login({...new UserDTO(username), id: username}));
+      const userData = user.id === username ? {...user, id: username} : {...new UserDTO(username), id: username};
+      dispatch(login(userData));
     } else {
       setValidationError(true);
     }

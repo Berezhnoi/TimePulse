@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   inputStyles: {
     borderWidth: 0,
     borderRadius: 0,
-    height: '100%',
+    height: 32,
     backgroundColor: 'transparent',
   },
   startDate: {

@@ -28,7 +28,7 @@ const userSlice = createSlice({
     },
 
     logout(userState: UserState) {
-      return {...userState, isSignedIn: false};
+      userState.isSignedIn = false;
     },
   },
 });

@@ -71,7 +71,7 @@ const RangePicker: React.FC<Props> = props => {
     if (valueFormatter) {
       return valueFormatter(date);
     }
-    return dayjs(date).format('YYYY-MM-DD HH:mm');
+    return dayjs(date).format(mode === 'date' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm');
   };
 
   const onChangeValue = async (newValues: Partial<PickerValues>): Promise<void> => {
@@ -149,13 +149,14 @@ const RangePicker: React.FC<Props> = props => {
           {activeDatePicker === 'startDate' && <View style={styles.activeDateFilter} />}
         </View>
         <View>
-          <TextInput
-            editable={false}
-            style={[styles.inputStyles, {width: inputWidth}]}
-            placeholder={endDatePlaceholder}
-            value={displayDate(tempValues?.endDate || values?.endDate)}
-            onPressIn={() => openDatePicker('endDate')}
-          />
+          <TouchableOpacity activeOpacity={1} onPress={() => openDatePicker('endDate')}>
+            <TextInput
+              editable={false}
+              style={[styles.inputStyles, {width: inputWidth}]}
+              placeholder={endDatePlaceholder}
+              value={displayDate(tempValues?.endDate || values?.endDate)}
+            />
+          </TouchableOpacity>
           {activeDatePicker === 'endDate' && <View style={styles.activeDateFilter} />}
         </View>
         {renderDatePicker()}
