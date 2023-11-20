@@ -1,5 +1,6 @@
 // Libs
 import React, {useState} from 'react';
+import {Platform} from 'react-native';
 import dayjs from 'dayjs';
 
 // Components
@@ -25,7 +26,6 @@ interface PickerValues {
 interface Props {
   values?: {startDate: Date; endDate: Date};
   mode?: DatePickerProps['mode'];
-  width?: number;
   startDatePlaceholder?: string;
   endDatePlaceholder?: string;
   label?: string;
@@ -41,7 +41,6 @@ const RangePicker: React.FC<Props> = props => {
     mode = 'datetime',
     startDatePlaceholder,
     endDatePlaceholder,
-    width = 320,
     label,
     containerStyles,
     required,
@@ -52,8 +51,6 @@ const RangePicker: React.FC<Props> = props => {
   const [activeDatePicker, setActiveDatePicker] = useState<'startDate' | 'endDate' | null>(null);
 
   const [tempValues, setTempValues] = useState<Partial<PickerValues>>({});
-
-  const inputWidth: number = width / 2;
 
   const openDatePicker = (type: typeof activeDatePicker): void => {
     if (!activeDatePicker) {
@@ -137,24 +134,32 @@ const RangePicker: React.FC<Props> = props => {
         </View>
       )}
       <View style={[styles.container, containerStyles]}>
-        <View>
-          <TouchableOpacity activeOpacity={1} onPress={() => openDatePicker('startDate')}>
+        <View style={commonStyles.full}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={Platform.OS === 'android' ? () => openDatePicker('startDate') : undefined}>
             <TextInput
               editable={false}
-              style={[styles.inputStyles, {width: inputWidth}]}
+              onPressIn={Platform.OS === 'ios' ? () => openDatePicker('startDate') : undefined}
+              style={styles.inputStyles}
               placeholder={startDatePlaceholder}
               value={displayDate(tempValues?.startDate || values?.startDate)}
+              underlineColor={'transparent'}
             />
           </TouchableOpacity>
           {activeDatePicker === 'startDate' && <View style={styles.activeDateFilter} />}
         </View>
-        <View>
-          <TouchableOpacity activeOpacity={1} onPress={() => openDatePicker('endDate')}>
+        <View style={commonStyles.full}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={Platform.OS === 'android' ? () => openDatePicker('endDate') : undefined}>
             <TextInput
               editable={false}
-              style={[styles.inputStyles, {width: inputWidth}]}
+              onPressIn={Platform.OS === 'ios' ? () => openDatePicker('endDate') : undefined}
+              style={[styles.inputStyles]}
               placeholder={endDatePlaceholder}
               value={displayDate(tempValues?.endDate || values?.endDate)}
+              underlineColor={'transparent'}
             />
           </TouchableOpacity>
           {activeDatePicker === 'endDate' && <View style={styles.activeDateFilter} />}

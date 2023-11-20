@@ -11,9 +11,6 @@ import {useAppDispatch, useAppSelector} from 'store';
 // Actions
 import {login} from 'store/slices/userSlice';
 
-// Utils
-import {UserDTO} from 'utils/UserDTO';
-
 // Types
 import {LoginScreenProps} from './login.types';
 
@@ -37,7 +34,7 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
       username === password && users.some(user => user.toLowerCase() === username.toLowerCase());
 
     if (isValidUsername) {
-      const userData = user.id === username ? {...user, id: username} : {...new UserDTO(username), id: username};
+      const userData = user.id === username ? (user as any) : {id: username, username};
       dispatch(login(userData));
     } else {
       setValidationError(true);

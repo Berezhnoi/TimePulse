@@ -26,6 +26,11 @@ const styles = StyleSheet.create({
     width: 100,
     marginLeft: 15,
   },
+  backButton: {
+    position: 'absolute',
+    left: 0,
+    top: 12,
+  },
 });
 
 export default styles;

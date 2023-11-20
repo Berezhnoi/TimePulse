@@ -1,10 +1,14 @@
 import {StyleSheet} from 'react-native';
+import colors from 'theme/colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    padding: 16,
+  },
+  darkorangeText: {
+    fontWeight: '500',
+    color: colors.darkorange,
   },
 });
 

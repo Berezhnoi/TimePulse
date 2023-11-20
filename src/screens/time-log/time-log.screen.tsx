@@ -1,5 +1,6 @@
 // Libs
 import React, {useMemo, useState} from 'react';
+import {Platform} from 'react-native';
 import {format} from 'date-fns';
 import {de} from 'date-fns/locale';
 
@@ -8,6 +9,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {Button, HelperText, TextInput} from 'react-native-paper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import CalendarModal from 'components/calendar-modal';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // Hooks
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -112,14 +114,32 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
       enableOnAndroid={true}
       style={commonStyles.full}
       contentContainerStyle={[styles.container, {paddingTop: insets.top}]}>
-      <Text style={[styles.section, styles.title]}>New Time Log</Text>
+      <View style={[commonStyles.row, commonStyles.justifyContentCenter, styles.section]}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.backButton}
+          hitSlop={{
+            top: 20,
+            left: 20,
+            bottom: 20,
+            right: 20,
+          }}
+          onPress={onCancel}>
+          <MaterialCommunityIcons name="arrow-left" size={26} />
+        </TouchableOpacity>
+        <Text style={styles.title}>New Time Log</Text>
+      </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>
           Date <Text style={commonStyles.required}>*</Text>
         </Text>
-        <TouchableOpacity activeOpacity={1} onPress={showCalendar}>
-          <TextInput value={formatedDate} editable={false} />
+        <TouchableOpacity activeOpacity={1} onPress={Platform.OS === 'android' ? showCalendar : undefined}>
+          <TextInput
+            value={formatedDate}
+            editable={false}
+            onPressIn={Platform.OS === 'ios' ? showCalendar : undefined}
+          />
         </TouchableOpacity>
       </View>
 
