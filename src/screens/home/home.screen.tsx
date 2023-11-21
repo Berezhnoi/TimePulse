@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 
 // Components
 import {View} from 'react-native';
-import {Avatar, Text} from 'react-native-paper';
+import {Avatar, Text, Button} from 'react-native-paper';
 import RangePicker from 'components/range-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -14,6 +14,9 @@ import {useAppSelector} from 'store';
 
 // Store
 import {getUserTimeLogs} from 'store/slices/timeLogsSlice';
+
+// Utils
+import {ReportHelper} from 'utils/report';
 
 // Theme
 import colors from 'theme/colors';
@@ -45,6 +48,14 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   });
 
   const loggedHours: number = filteredLogs.reduce((acc, log) => (acc += log.loggedTime), 0);
+
+  const printReport = async (): Promise<void> => {
+    try {
+      await ReportHelper.printReport({});
+    } catch (error) {
+      console.error(`[printReport] ${error}`);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -78,6 +89,16 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
           </Text>
         </View>
       </View>
+
+      <Button
+        icon={() => <MaterialCommunityIcons name="printer" size={34} color={colors.white} />}
+        mode="contained"
+        style={styles.printReportButton}
+        onPress={printReport}>
+        <Text variant="headlineSmall" style={{color: colors.white}}>
+          Print
+        </Text>
+      </Button>
     </View>
   );
 };
