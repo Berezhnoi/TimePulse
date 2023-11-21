@@ -12,6 +12,7 @@ import {useAppDispatch, useAppSelector} from 'store';
 import {login} from 'store/slices/userSlice';
 
 // Types
+import {User} from 'types/models/user';
 import {LoginScreenProps} from './login.types';
 
 // Styles
@@ -34,7 +35,13 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
       username === password && users.some(user => user.toLowerCase() === username.toLowerCase());
 
     if (isValidUsername) {
-      const userData = user.id === username ? (user as any) : {id: username, username};
+      let userData: User = user.id === username ? (user as any) : {id: username, username};
+      if (username === 'oksana') {
+        userData.name = 'Oksana';
+        userData.surname = 'Jurgenson';
+        userData.phoneNumber = '491749314510';
+        userData.email = 'Oksana-jurgenson@t-online.de';
+      }
       dispatch(login(userData));
     } else {
       setValidationError(true);

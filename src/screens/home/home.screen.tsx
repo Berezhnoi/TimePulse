@@ -22,6 +22,7 @@ import {ReportHelper} from 'utils/report';
 import colors from 'theme/colors';
 
 // Types
+import {TimeLog} from 'types/models/time-log';
 import {HomeScreenProps} from './home.types';
 
 // Styles
@@ -40,7 +41,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     endDate: new Date(),
   });
 
-  const filteredLogs = timeLogs.filter(log => {
+  const filteredLogs: TimeLog[] = timeLogs.filter(log => {
     const loggedDate = dayjs(log.loggedDate);
     const startRangeCondition = loggedDate.isAfter(timeRange.startDate) || loggedDate.isSame(timeRange.startDate);
     const endRangeCondition = loggedDate.isBefore(timeRange.endDate) || loggedDate.isSame(timeRange.endDate);
@@ -51,7 +52,14 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   const printReport = async (): Promise<void> => {
     try {
-      await ReportHelper.printReport({});
+      await ReportHelper.printReport({
+        title: 'Time Log',
+        fromDate: timeRange.startDate,
+        toDate: timeRange.endDate,
+        generatedDate: new Date(),
+        generatedFor: userData.name || userData.surname || userData.username || 'Friend',
+        logs: filteredLogs,
+      });
     } catch (error) {
       console.error(`[printReport] ${error}`);
     }
@@ -83,17 +91,20 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         <MaterialCommunityIcons name="progress-clock" size={128} color={colors.orange} style={{opacity: 0.8}} />
         <View>
           <Text variant="headlineSmall">Total Log Hours</Text>
-          <Text variant="displayMedium" style={styles.darkorangeText}>
-            {loggedHours}
+          <View style={[commonStyles.row, commonStyles.alignItemsBaseline]}>
+            <Text variant="displayMedium" style={styles.darkorangeText}>
+              {loggedHours}
+            </Text>
             <Text variant="labelLarge"> hrs</Text>
-          </Text>
+          </View>
         </View>
       </View>
 
       <Button
         icon={() => <MaterialCommunityIcons name="printer" size={34} color={colors.white} />}
         mode="contained"
-        style={styles.printReportButton}
+        style={[styles.printReportButton, loggedHours <= 0 && styles.disabledButton]}
+        disabled={loggedHours <= 0}
         onPress={printReport}>
         <Text variant="headlineSmall" style={{color: colors.white}}>
           Print

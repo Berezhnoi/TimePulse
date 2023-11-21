@@ -32,6 +32,9 @@ const flexStyles = StyleSheet.create({
   alignItemsEnd: {
     alignItems: 'flex-end',
   },
+  alignItemsBaseline: {
+    alignItems: 'baseline',
+  },
   alignSelfCenter: {
     alignSelf: 'center',
   },
