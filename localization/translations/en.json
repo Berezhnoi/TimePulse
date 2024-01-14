@@ -1,0 +1,43 @@
+{
+    "bottomTabs": {
+        "home": "Home",
+        "timesheet": "Timesheet",
+        "profile": "Profile"
+    },
+    "auth": {
+        "username": "Username",
+        "password": "Password",
+        "login": "Login",
+        "incorrectCredentials": "The username or password you entered is incorrect"
+    },
+    "home": {
+        "welcomeBack": "Welcome back",
+        "timeRange": "Time range",
+        "totalLogHours": "Total log hours",
+        "hrs": "hrs",
+        "print": "Print"
+    },
+    "timesheet": {
+        "title": "Timesheet",
+        "addTimeLog": "Add time log"
+    },
+    "profile": {
+        "name": "Name",
+        "surname": "Surname",
+        "email": "Email",
+        "phoneNumber": "Phone number",
+        "logOut": "Log out"
+    },
+    "localization": {
+        "language": "Language",
+        "en": "English",
+        "de": "German",
+        "pl": "Polish",
+        "ru": "Russian",
+        "sk": "Slovak"
+    },
+    "general": {
+        "save": "Save",
+        "edit": "Edit"
+    }
+}

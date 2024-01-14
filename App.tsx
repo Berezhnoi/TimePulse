@@ -2,34 +2,29 @@
 import React, {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 
-// Providers
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
-import {PaperProvider} from 'react-native-paper';
-
 // Navigation
 import Navigator from 'navigation/index';
 
+// Services
+import {LocaleService} from 'services';
+
 // Store
-import {store, persistor} from 'store/index';
+import {useAppSelector} from 'store/index';
 
 function App(): JSX.Element {
+  const language = useAppSelector(state => state.user?.language);
+
+  useEffect(() => {
+    if (language) {
+      LocaleService.changeLanguage(language);
+    }
+  }, [language]);
+
   useEffect(() => {
     setTimeout(() => SplashScreen.hide(), 1000);
   }, []);
 
-  return (
-    <SafeAreaProvider>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <PaperProvider>
-            <Navigator />
-          </PaperProvider>
-        </PersistGate>
-      </Provider>
-    </SafeAreaProvider>
-  );
+  return <Navigator />;
 }
 
 export default App;

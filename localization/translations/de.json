@@ -1,0 +1,43 @@
+{
+    "bottomTabs": {
+        "home": "Heim",
+        "timesheet": "Stundenzettel",
+        "profile": "Profil"
+    },
+    "auth": {
+        "username": "Nutzername",
+        "password": "Passwort",
+        "login": "Anmeldung",
+        "incorrectCredentials": "Der von Ihnen eingegebene Benutzername oder Passwort ist falsch"
+    },
+    "home": {
+        "welcomeBack": "Willkommen zurück",
+        "timeRange": "Zeitspanne",
+        "totalLogHours": "Gesamte Protokoll Stunden",
+        "hrs": "Std",
+        "print": "Drucken"
+    },
+    "timesheet": {
+        "title": "Stundenzettel",
+        "addTimeLog": "Zeitprotokoll hinzufügen"
+    },
+    "profile": {
+        "name": "Name",
+        "surname": "Nachname",
+        "email": "Email",
+        "phoneNumber": "Telefonnummer",
+        "logOut": "Ausloggen"
+    },
+    "localization": {
+        "language": "Sprache",
+        "en": "Englisch",
+        "de": "Deutsch",
+        "pl": "Polnisch",
+        "ru": "Russisch",
+        "sk": "Slowakisch"
+    },
+    "general": {
+        "save": "Speichern",
+        "edit": "Bearbeiten"
+    }
+}

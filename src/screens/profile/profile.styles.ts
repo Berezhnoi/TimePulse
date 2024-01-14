@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   actionButton: {
-    width: 120,
+    minWidth: 120,
     borderRadius: 8,
     backgroundColor: colors.orangered,
     marginLeft: 'auto',
@@ -20,6 +20,16 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     marginBottom: 20,
     marginLeft: 'auto',
+  },
+  lngListItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  lngListItemText: {
+    fontSize: 16,
+    color: '#333',
   },
 });
 

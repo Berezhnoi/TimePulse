@@ -7,6 +7,7 @@ import {Button, HelperText, TextInput} from 'react-native-paper';
 
 // Hooks
 import {useAppDispatch, useAppSelector} from 'store';
+import {useTranslation} from 'react-i18next';
 
 // Actions
 import {login} from 'store/slices/userSlice';
@@ -24,6 +25,8 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
 
   const user = useAppSelector(state => state.user);
 
+  const {t} = useTranslation('translation', {keyPrefix: 'auth'});
+
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -35,7 +38,7 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
       username === password && users.some(user => user.toLowerCase() === username.toLowerCase());
 
     if (isValidUsername) {
-      let userData: User = user.id === username ? (user as any) : {id: username, username};
+      let userData: User = user.id === username ? (Object.assign({}, user) as any) : {id: username, username};
       if (username === 'oksana') {
         userData.name = 'Oksana';
         userData.surname = 'Jurgenson';
@@ -51,7 +54,7 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
   return (
     <View style={styles.container}>
       <TextInput
-        label="Username"
+        label={t('username')}
         value={username}
         autoCapitalize="none"
         onChangeText={value => {
@@ -62,7 +65,7 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
         }}
       />
       <TextInput
-        label="Password"
+        label={t('password')}
         value={password}
         autoCapitalize="none"
         onChangeText={value => {
@@ -75,11 +78,11 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
       />
 
       <HelperText type="error" visible={validationError} padding="none">
-        The username or password you entered is incorrect
+        {t('incorrectCredentials')}
       </HelperText>
 
       <Button icon="home" mode="contained" onPress={onSubmit} style={commonStyles.mT25} disabled={validationError}>
-        LOG IN
+        {t('login')}
       </Button>
     </View>
   );

@@ -12,7 +12,9 @@ const styles = StyleSheet.create({
     color: colors.darkorange,
   },
   addTimeLogButton: {
-    width: 150,
+    marginLeft: 15,
+    minWidth: 150,
+    flexShrink: 1,
     backgroundColor: colors.orangered,
   },
   sectionHeader: {

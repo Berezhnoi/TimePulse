@@ -12,6 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 // Hooks
 import {useAppSelector} from 'store';
+import {useTranslation} from 'react-i18next';
 
 // Config
 import {SCREENS} from 'config';
@@ -25,13 +26,15 @@ const Tab = createMaterialBottomTabNavigator<TabStackParamsList>();
 const TimesheetStack = createNativeStackNavigator<TimesheetStackParamsList>();
 
 function TabStackScreens() {
+  const {t} = useTranslation('translation', {keyPrefix: 'bottomTabs'});
+
   return (
     <Tab.Navigator initialRouteName={SCREENS.Home}>
       <Tab.Screen
         name={SCREENS.Home}
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: t('home'),
           tabBarIcon: () => <MaterialCommunityIcons name="home" size={26} />,
         }}
       />
@@ -39,7 +42,7 @@ function TabStackScreens() {
         name={SCREENS.Timesheet}
         component={TimesheetStackScreens}
         options={{
-          tabBarLabel: 'Timesheet',
+          tabBarLabel: t('timesheet'),
           tabBarIcon: () => <MaterialCommunityIcons name="clock-outline" size={26} />,
         }}
       />
@@ -47,7 +50,7 @@ function TabStackScreens() {
         name={SCREENS.Profile}
         component={ProfileScreen}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: t('profile'),
           tabBarIcon: () => <MaterialCommunityIcons name="account" size={26} />,
         }}
       />

@@ -30,9 +30,13 @@ const userSlice = createSlice({
     logout(userState: UserState) {
       userState.isSignedIn = false;
     },
+
+    setLanguage: (userState: UserState, action: PayloadAction<{language: string}>) => {
+      userState.language = action.payload.language;
+    },
   },
 });
 
-export const {login, updateUser, logout} = userSlice.actions;
+export const {login, updateUser, setLanguage, logout} = userSlice.actions;
 
 export default userSlice;

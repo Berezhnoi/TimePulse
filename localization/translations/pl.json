@@ -1,0 +1,43 @@
+{
+    "bottomTabs": {
+        "home": "Strona główna",
+        "timesheet": "Lista obecności",
+        "profile": "Profil"
+    },
+    "auth": {
+        "username": "Nazwa użytkownika",
+        "password": "Hasło",
+        "login": "Zaloguj sie",
+        "incorrectCredentials": "Wprowadzona nazwa użytkownika lub hasło jest nieprawidłowe"
+    },
+    "home": {
+        "welcomeBack": "Witamy spowrotem",
+        "timeRange": "Zakres czasu",
+        "totalLogHours": "Łączna liczba godzin dziennika",
+        "hrs": "godz",
+        "print": "Drukuj"
+    },
+    "timesheet": {
+        "title": "Lista obecności",
+        "addTimeLog": "Dodaj dziennik czasu"
+    },
+    "profile": {
+        "name": "Imię",
+        "surname": "Nazwisko",
+        "email": "Email",
+        "phoneNumber": "Numer telefonu",
+        "logOut": "Wyloguj"
+    },
+    "localization": {
+        "language": "Język",
+        "en": "Angielski",
+        "de": "Niemiecki",
+        "pl": "Polski",
+        "ru": "Rosyjski",
+        "sk": "Słowacki"
+    },
+    "general": {
+        "save": "Zapisz",
+        "edit": "Edytować"
+    }
+}

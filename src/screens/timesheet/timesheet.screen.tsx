@@ -10,6 +10,7 @@ import TimesheetListItem from 'components/timesheet-list-item';
 
 // Hooks
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 import {useAppSelector} from 'store';
 
 // Store
@@ -28,6 +29,8 @@ import styles from './timesheet.styles';
 
 const TimesheetScreen: React.FC<TimesheetScreenProps> = ({navigation}) => {
   const insets = useSafeAreaInsets();
+
+  const {t} = useTranslation('translation', {keyPrefix: 'timesheet'});
 
   const timeLogs: TimeLog[] = useAppSelector(getUserTimeLogs);
 
@@ -57,13 +60,13 @@ const TimesheetScreen: React.FC<TimesheetScreenProps> = ({navigation}) => {
           commonStyles.mT10,
           commonStyles.mB10,
         ]}>
-        <Text style={styles.title}>Timesheet</Text>
+        <Text style={styles.title}>{t('title')}</Text>
         <Button
           icon=""
           mode="contained"
           onPress={() => navigation.navigate(SCREENS.TimeLog)}
           style={styles.addTimeLogButton}>
-          Add Time Log
+          {t('addTimeLog')}
         </Button>
       </View>
 

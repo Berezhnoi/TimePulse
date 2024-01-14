@@ -10,6 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 // Hooks
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 import {useAppSelector} from 'store';
 
 // Store
@@ -35,6 +36,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const timeLogs = useAppSelector(getUserTimeLogs);
 
   const userData = useAppSelector(state => state.user);
+
+  const {t} = useTranslation('translation', {keyPrefix: 'home'});
 
   const [timeRange, setTimeRange] = useState<{startDate: Date; endDate: Date}>({
     startDate: dayjs().startOf('month').toDate(),
@@ -70,7 +73,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       <View style={[commonStyles.row, commonStyles.alignItemsCenter, commonStyles.mB25, {paddingTop: insets.top}]}>
         <Avatar.Image size={51} source={require('../../assets/avatar.png')} />
         <View style={[commonStyles.mL20]}>
-          <Text>WELCOME BACK,</Text>
+          <Text>{t('welcomeBack')},</Text>
           <Text variant="titleMedium" style={styles.darkorangeText}>
             {userData.name || 'FRIEND'}
           </Text>
@@ -78,7 +81,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       </View>
 
       <RangePicker
-        label={'Time range'}
+        label={t('timeRange')}
         required
         mode="date"
         startDatePlaceholder={'Start date'}
@@ -89,13 +92,13 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
       <View style={[commonStyles.row, commonStyles.alignItemsCenter, commonStyles.mT35]}>
         <MaterialCommunityIcons name="progress-clock" size={128} color={colors.orange} style={{opacity: 0.8}} />
-        <View>
-          <Text variant="headlineSmall">Total Log Hours</Text>
+        <View style={[commonStyles.fS1]}>
+          <Text variant="headlineSmall">{t('totalLogHours')}</Text>
           <View style={[commonStyles.row, commonStyles.alignItemsBaseline]}>
             <Text variant="displayMedium" style={styles.darkorangeText}>
               {loggedHours}
             </Text>
-            <Text variant="labelLarge"> hrs</Text>
+            <Text variant="labelLarge"> {t('hrs')}</Text>
           </View>
         </View>
       </View>
@@ -107,7 +110,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         disabled={loggedHours <= 0}
         onPress={printReport}>
         <Text variant="headlineSmall" style={{color: colors.white}}>
-          Print
+          {t('print')}
         </Text>
       </Button>
     </View>

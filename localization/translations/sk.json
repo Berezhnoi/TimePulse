@@ -1,0 +1,43 @@
+{
+    "bottomTabs": {
+        "home": "Domov",
+        "timesheet": "Časový rozvrh",
+        "profile": "Profil"
+    },
+    "auth": {
+        "username": "Používateľské meno",
+        "password": "Heslo",
+        "login": "Prihlásiť sa",
+        "incorrectCredentials": "Prihlasovacie meno alebo heslo, ktoré ste zadali, je nesprávne"
+    },
+    "home": {
+        "welcomeBack": "Vitaj späť",
+        "timeRange": "Časové rozpätie",
+        "totalLogHours": "Celkový počet hodín denníka",
+        "hrs": "hod",
+        "print": "Tlačiť"
+    },
+    "timesheet": {
+        "title": "Časový rozvrh",
+        "addTimeLog": "Pridajte denník času"
+    },
+    "profile": {
+        "name": "Meno",
+        "surname": "Priezvisko",
+        "email": "Email",
+        "phoneNumber": "Telefónne číslo",
+        "logOut": "Odhlásiť sa"
+    },
+    "localization": {
+        "language": "Jazyk",
+        "en": "Angličtina",
+        "de": "Nemčina",
+        "pl": "Poľština",
+        "ru": "Ruština",
+        "sk": "Slovenčina"
+    },
+    "general": {
+        "save": "Uložiť",
+        "edit": "Upraviť"
+    }
+}
