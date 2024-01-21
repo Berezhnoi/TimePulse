@@ -9,6 +9,9 @@ import {de} from 'date-fns/locale';
 // Template
 import {renderReportTemplate} from './report-template';
 
+// Helper
+import {getFileExtension, removeTempDirectory, saveImageToTemp} from './helper';
+
 // Types
 import {ReportTemplateParams} from './types';
 import {Asset} from 'react-native-image-picker';
@@ -17,11 +20,13 @@ import {ShareSingleOptions} from 'react-native-share';
 class ReportHelper {
   private static MANAGER_EMAIL: string = 'yk@oj-service.de';
 
+  private static getFormatedDate(date: Date = new Date()) {
+    return format(date, 'dd.MM.yyyy', {locale: de});
+  }
+
   static async createPDF(reportTemplateParams: ReportTemplateParams) {
-    const reportFileName: string = `logs_report_${reportTemplateParams.generatedFor}_${format(
+    const reportFileName: string = `logs_report_${reportTemplateParams.generatedFor}_${ReportHelper.getFormatedDate(
       reportTemplateParams.generatedDate,
-      'dd.MM.yyyy',
-      {locale: de},
     )}`;
 
     const options: RNHTMLtoPDF.Options = {
@@ -47,8 +52,27 @@ class ReportHelper {
   static async shareReport(selectedImage: Asset, reportTemplateParams?: ReportTemplateParams): Promise<void> {
     const urls: string[] = [];
 
+    try {
+      await removeTempDirectory();
+    } catch (err) {
+      console.error(err);
+    }
+
     if (selectedImage.uri) {
-      urls.push(selectedImage.uri);
+      let imageUri: string = selectedImage.uri;
+
+      if (Platform.OS === 'android') {
+        // Save the selected image with the correct name in a temporary directory
+        const tempImagePath = await saveImageToTemp(
+          selectedImage.uri,
+          `image_report_${ReportHelper.getFormatedDate()}.${
+            selectedImage.fileName ? getFileExtension(selectedImage.fileName) : 'jpg'
+          }`,
+        );
+        imageUri = `file://${tempImagePath}`;
+      }
+
+      urls.push(imageUri);
     }
 
     if (reportTemplateParams) {
