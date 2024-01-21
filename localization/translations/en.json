@@ -15,7 +15,9 @@
         "timeRange": "Time range",
         "totalLogHours": "Total log hours",
         "hrs": "hrs",
-        "print": "Print"
+        "print": "Print",
+        "takePhotoAndShare": "Take Photo and Share",
+        "selectPhotoAndShare": "Select Photo and Share"
     },
     "timesheet": {
         "title": "Timesheet",

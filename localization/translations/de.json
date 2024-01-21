@@ -15,7 +15,9 @@
         "timeRange": "Zeitspanne",
         "totalLogHours": "Gesamte Protokoll Stunden",
         "hrs": "Std",
-        "print": "Drucken"
+        "print": "Drucken",
+        "takePhotoAndShare": "Foto machen und teilen",
+        "selectPhotoAndShare": "Foto auswählen und teilen"
     },
     "timesheet": {
         "title": "Stundenzettel",

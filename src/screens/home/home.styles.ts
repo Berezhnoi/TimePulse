@@ -10,12 +10,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: colors.darkorange,
   },
-  printReportButton: {
+  reportButton: {
     borderRadius: 12,
-    marginTop: 30,
-    width: 180,
     backgroundColor: colors.orangered,
-    alignSelf: 'center',
   },
   disabledButton: {
     backgroundColor: colors.lightgray,

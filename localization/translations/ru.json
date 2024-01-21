@@ -15,7 +15,9 @@
         "timeRange": "Временной диапазон",
         "totalLogHours": "Общее количество часов",
         "hrs": "часы",
-        "print": "Распечатать"
+        "print": "Распечатать",
+        "takePhotoAndShare": "Сделать фото и поделиться",
+        "selectPhotoAndShare": "Выбрать фото и поделиться"
     },
     "timesheet": {
         "title": "Учет времени",

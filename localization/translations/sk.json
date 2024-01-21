@@ -15,7 +15,9 @@
         "timeRange": "Časové rozpätie",
         "totalLogHours": "Celkový počet hodín denníka",
         "hrs": "hod",
-        "print": "Tlačiť"
+        "print": "Tlačiť",
+        "takePhotoAndShare": "Fotografovať a zdieľať",
+        "selectPhotoAndShare": "Vybrať fotografiu a zdieľať"
     },
     "timesheet": {
         "title": "Časový rozvrh",

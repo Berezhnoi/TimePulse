@@ -15,7 +15,9 @@
         "timeRange": "Zakres czasu",
         "totalLogHours": "Łączna liczba godzin dziennika",
         "hrs": "godz",
-        "print": "Drukuj"
+        "print": "Drukuj",
+        "takePhotoAndShare": "Zrób zdjęcie i udostępnij",
+        "selectPhotoAndShare": "Wybierz zdjęcie i udostępnij"
     },
     "timesheet": {
         "title": "Lista obecności",

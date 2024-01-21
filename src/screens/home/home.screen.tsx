@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import {View} from 'react-native';
 import {Avatar, Text, Button} from 'react-native-paper';
 import RangePicker from 'components/range-picker';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // Hooks
@@ -18,6 +19,7 @@ import {getUserTimeLogs} from 'store/slices/timeLogsSlice';
 
 // Utils
 import {ReportHelper} from 'utils/report';
+import {ImagePickerHelper} from 'utils/ImagePickerHelper';
 
 // Theme
 import colors from 'theme/colors';
@@ -53,18 +55,38 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   const loggedHours: number = filteredLogs.reduce((acc, log) => (acc += log.loggedTime), 0);
 
+  const getReportTemplateParams = () => {
+    return {
+      title: 'Time Log',
+      fromDate: timeRange.startDate,
+      toDate: timeRange.endDate,
+      generatedDate: new Date(),
+      generatedFor: userData.name || userData.surname || userData.username || 'Friend',
+      logs: filteredLogs,
+    };
+  };
+
   const printReport = async (): Promise<void> => {
     try {
-      await ReportHelper.printReport({
-        title: 'Time Log',
-        fromDate: timeRange.startDate,
-        toDate: timeRange.endDate,
-        generatedDate: new Date(),
-        generatedFor: userData.name || userData.surname || userData.username || 'Friend',
-        logs: filteredLogs,
-      });
+      await ReportHelper.printReport(getReportTemplateParams());
     } catch (error) {
       console.error(`[printReport] ${error}`);
+    }
+  };
+
+  const shareReport = async (type: 'selectPicture' | 'takePicture'): Promise<void> => {
+    try {
+      const result = await (type === 'selectPicture'
+        ? ImagePickerHelper.selectPhoto({selectionLimit: 1})
+        : ImagePickerHelper.takePhoto());
+      const selectedImage = result?.assets?.[0];
+      if (result?.didCancel || result?.errorCode || result?.errorMessage || !selectedImage) {
+        // Abort the method
+        return;
+      }
+      await ReportHelper.shareReport(selectedImage, loggedHours > 0 ? getReportTemplateParams() : undefined);
+    } catch (error) {
+      console.error('[shareImageReport] ', error);
     }
   };
 
@@ -104,12 +126,32 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       </View>
 
       <Button
+        icon={() => <Ionicons name="camera" size={34} color={colors.white} />}
+        mode="contained"
+        style={[styles.reportButton, commonStyles.mT30]}
+        onPress={() => shareReport('takePicture')}>
+        <Text variant="titleLarge" style={{color: colors.white}}>
+          {t('takePhotoAndShare')}
+        </Text>
+      </Button>
+
+      <Button
+        icon={() => <Ionicons name="images" size={34} color={colors.white} />}
+        mode="contained"
+        style={[styles.reportButton, commonStyles.mT30]}
+        onPress={() => shareReport('selectPicture')}>
+        <Text variant="titleLarge" style={{color: colors.white}}>
+          {t('selectPhotoAndShare')}
+        </Text>
+      </Button>
+
+      <Button
         icon={() => <MaterialCommunityIcons name="printer" size={34} color={colors.white} />}
         mode="contained"
-        style={[styles.printReportButton, loggedHours <= 0 && styles.disabledButton]}
+        style={[styles.reportButton, commonStyles.mT30, loggedHours <= 0 && styles.disabledButton]}
         disabled={loggedHours <= 0}
         onPress={printReport}>
-        <Text variant="headlineSmall" style={{color: colors.white}}>
+        <Text variant="titleLarge" style={{color: colors.white}}>
           {t('print')}
         </Text>
       </Button>
