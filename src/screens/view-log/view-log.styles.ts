@@ -18,14 +18,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 3,
   },
-  addTimeLogButton: {
-    width: 85,
-    backgroundColor: colors.orangered,
-  },
-  cancelButton: {
-    width: 100,
-    marginLeft: 15,
-  },
   backButton: {
     position: 'absolute',
     left: 0,

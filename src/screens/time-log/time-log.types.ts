@@ -6,6 +6,7 @@ export type TimeLogScreenProps = NativeStackScreenProps<TimesheetStackParamsList
 
 export interface TimeLogForm {
   selectedDate: string;
-  dailyLog: number;
   notes: string;
+  workTimeFrom: Date | null;
+  workTimeTo: Date | null;
 }

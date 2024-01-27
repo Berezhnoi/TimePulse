@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const paddingStyles = StyleSheet.create({
   pL5: {
@@ -6,6 +6,9 @@ const paddingStyles = StyleSheet.create({
   },
   pL10: {
     paddingLeft: 10,
+  },
+  pL15: {
+    paddingLeft: 15,
   },
   pR5: {
     paddingRight: 5,
@@ -57,6 +60,9 @@ const paddingStyles = StyleSheet.create({
   },
   pV0: {
     paddingVertical: 0,
+  },
+  pV5: {
+    paddingVertical: 5,
   },
   pV10: {
     paddingVertical: 10,

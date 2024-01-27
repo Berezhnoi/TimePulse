@@ -73,7 +73,9 @@ const TimesheetScreen: React.FC<TimesheetScreenProps> = ({navigation}) => {
       <SectionList
         sections={listData}
         keyExtractor={(item, index) => item.id + index}
-        renderItem={({item}: {item: TimeLog}) => <TimesheetListItem item={item} />}
+        renderItem={({item}: {item: TimeLog}) => (
+          <TimesheetListItem item={item} onPress={() => navigation.navigate(SCREENS.ViewLog, {logId: item.id})} />
+        )}
         ItemSeparatorComponent={() => <Divider />}
         renderSectionHeader={({section: {title}}) => <Text style={styles.sectionHeader}>{title}</Text>}
         contentContainerStyle={commonStyles.fG1}

@@ -5,9 +5,19 @@ export interface TimeLog {
   id: string;
 
   /**
-   * The amount of time logged in hours.
+   * The starting time of the work in milliseconds since the epoch.
    */
-  loggedTime: number;
+  fromTime: number;
+
+  /**
+   * The ending time of the work in milliseconds since the epoch.
+   */
+  toTime: number;
+
+  /**
+   * The duration of the pause in milliseconds.
+   */
+  pause: number;
 
   /**
    * The date when the work was performed (timestamp in milliseconds).

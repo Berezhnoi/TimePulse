@@ -5,4 +5,5 @@ export enum SCREENS {
   Timesheet = 'Timesheet',
   TimesheetMain = 'TimesheetMain',
   TimeLog = 'TimeLog',
+  ViewLog = 'ViewLog',
 }

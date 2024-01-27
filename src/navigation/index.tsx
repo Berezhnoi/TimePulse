@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
 // Screens
-import {HomeScreen, LoginScreen, ProfileScreen, TimesheetScreen, TimeLogScreen} from 'screens';
+import {HomeScreen, LoginScreen, ProfileScreen, TimesheetScreen, TimeLogScreen, ViewLogScreen} from 'screens';
 
 // Components
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -63,6 +63,7 @@ function TimesheetStackScreens() {
     <TimesheetStack.Navigator screenOptions={{headerShown: false}} initialRouteName={SCREENS.TimesheetMain}>
       <TimesheetStack.Screen name={SCREENS.TimesheetMain} component={TimesheetScreen} />
       <TimesheetStack.Screen name={SCREENS.TimeLog} component={TimeLogScreen} />
+      <TimesheetStack.Screen name={SCREENS.ViewLog} component={ViewLogScreen} />
     </TimesheetStack.Navigator>
   );
 }

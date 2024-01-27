@@ -1,15 +1,16 @@
 // Libs
 import React, {useMemo, useState} from 'react';
 import {Platform} from 'react-native';
-import {format} from 'date-fns';
+import {format, isBefore, isAfter, isEqual} from 'date-fns';
 import {de} from 'date-fns/locale';
 
 // Components
 import {View, Text, TouchableOpacity} from 'react-native';
-import {Button, HelperText, TextInput} from 'react-native-paper';
+import {Button, HelperText, Switch, TextInput} from 'react-native-paper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import CalendarModal from 'components/calendar-modal';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import CalendarModal from 'components/calendar-modal';
+import TimeRangePicker from 'components/time-range-picker';
 
 // Hooks
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -19,11 +20,11 @@ import {useAppDispatch, useAppSelector} from 'store';
 import {addTimeLog} from 'store/slices/timeLogsSlice';
 
 // Utils
-import {isNumeric} from 'utils';
 import {TimeLogDTO} from 'utils/TimeLogDTO';
+import {minutesToMilliseconds} from 'utils';
 
 // Config
-import {SCREENS} from 'config/screens';
+import {SCREENS, DATE_FORMAT, PAUSE_IN_MIN} from 'config';
 
 // Types
 import {TimeLogForm, TimeLogScreenProps} from './time-log.types';
@@ -31,8 +32,6 @@ import {TimeLogForm, TimeLogScreenProps} from './time-log.types';
 // Styles
 import {commonStyles} from 'styles';
 import styles from './time-log.styles';
-
-const DATE_FORMAT = 'yyyy-MM-dd';
 
 const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
   const insets = useSafeAreaInsets();
@@ -42,14 +41,21 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
   const user = useAppSelector(state => state.user);
 
   const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), DATE_FORMAT));
-  const [dailyLog, setDailyLog] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
 
   const [touched, setTouched] = useState<Record<keyof TimeLogForm, boolean>>({
     selectedDate: false,
-    dailyLog: false,
     notes: false,
+    workTimeFrom: false,
+    workTimeTo: false,
   });
+
+  const [workTime, setWorkTime] = useState<{
+    from: Date | null;
+    to: Date | null;
+  }>({from: null, to: null});
+
+  const [isPauseOn, setIsPauseOn] = useState<boolean>(true);
 
   const [visibleCalendar, setCalendarVisible] = useState<boolean>(false);
 
@@ -61,16 +67,30 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
   const errors: Partial<Record<keyof TimeLogForm, string>> = useMemo(() => {
     const result: Partial<Record<keyof TimeLogForm, string>> = {};
 
-    if (!isNumeric(dailyLog) || Number(dailyLog) <= 0) {
-      result.dailyLog = 'Daily log is mandatory field';
+    if (!workTime.from) {
+      result.workTimeFrom = 'Start time – required field';
     }
 
-    if (!result.dailyLog && Number(dailyLog) > 24) {
-      result.dailyLog = 'Daily log - maximum value is 24';
+    if (!workTime.to) {
+      result.workTimeTo = 'End time – required field';
+    }
+
+    if (workTime.from && workTime.to) {
+      if (isEqual(workTime.to, workTime.from)) {
+        result.workTimeTo = 'End time must be different from Start time';
+      }
+
+      if (isBefore(workTime.to, workTime.from)) {
+        result.workTimeTo = 'End time must be after Start time';
+      }
+
+      if (isAfter(workTime.from, workTime.to)) {
+        result.workTimeFrom = 'Start time must be before End time';
+      }
     }
 
     return result;
-  }, [dailyLog]);
+  }, [workTime]);
 
   const hasFieldError = (fieldKey: keyof TimeLogForm): boolean => {
     return !!errors[fieldKey];
@@ -80,15 +100,22 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
     if (Object.keys(errors).some(err => !!err)) {
       setTouched({
         selectedDate: true,
-        dailyLog: true,
         notes: true,
+        workTimeFrom: true,
+        workTimeTo: true,
       });
       return;
     }
 
-    if (!user.id) return;
+    if (!user.id || !workTime.from || !workTime.to) return;
 
-    const timeLog = new TimeLogDTO(Number(dailyLog), Number(new Date(selectedDate)), notes);
+    const timeLog = new TimeLogDTO(
+      workTime.from.getTime(),
+      workTime.to.getTime(),
+      isPauseOn ? minutesToMilliseconds(PAUSE_IN_MIN) : 0,
+      Number(new Date(selectedDate)),
+      notes,
+    );
 
     dispatch(addTimeLog({userId: user.id, timeLog: timeLog}));
 
@@ -97,15 +124,6 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
 
   const onCancel = (): void => {
     navigation.navigate(SCREENS.TimesheetMain);
-  };
-
-  const onChangeDailyLog = (value: string) => {
-    if (!touched.dailyLog) {
-      setTouched(prevState => ({...prevState, dailyLog: true}));
-    }
-    // Use a regular expression to remove any characters that are not numbers or spaces
-    const sanitizedValue = value.replace(/[^0-9\s]/g, '');
-    setDailyLog(sanitizedValue);
   };
 
   return (
@@ -143,14 +161,31 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.section}>
+      <View>
         <Text style={styles.label}>
-          Daily Log <Text style={commonStyles.required}>*</Text>
+          Arbeitszeit <Text style={commonStyles.required}>*</Text>
         </Text>
-        <TextInput keyboardType="number-pad" maxLength={2} value={dailyLog} onChangeText={onChangeDailyLog} />
-        <HelperText type="error" visible={touched.dailyLog && hasFieldError('dailyLog')} padding="none">
-          {errors.dailyLog}
-        </HelperText>
+        <TimeRangePicker time={workTime} onChange={values => setWorkTime(values)} />
+        <View style={[commonStyles.rowWrap, commonStyles.justifyContentSpaceBetween]}>
+          <HelperText type="error" visible={touched.workTimeFrom && hasFieldError('workTimeFrom')} padding="none">
+            {errors.workTimeFrom}
+          </HelperText>
+          <HelperText type="error" visible={touched.workTimeTo && hasFieldError('workTimeTo')} padding="none">
+            {errors.workTimeTo}
+          </HelperText>
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.label}>Pause</Text>
+        <View style={[commonStyles.row]}>
+          <TextInput value={isPauseOn ? `${PAUSE_IN_MIN} min` : '-'} editable={false} style={styles.pauseInput} />
+          <Switch
+            value={isPauseOn}
+            onValueChange={() => setIsPauseOn(prevState => !prevState)}
+            style={[{transform: [{scaleX: 1.5}, {scaleY: 1.5}]}, commonStyles.mL20]}
+          />
+        </View>
       </View>
 
       <View style={styles.section}>

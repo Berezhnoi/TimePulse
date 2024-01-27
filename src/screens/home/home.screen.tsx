@@ -18,6 +18,7 @@ import {useAppSelector} from 'store';
 import {getUserTimeLogs} from 'store/slices/timeLogsSlice';
 
 // Utils
+import {calculateTotalTime} from 'utils';
 import {ReportHelper} from 'utils/report';
 import {ImagePickerHelper} from 'utils/ImagePickerHelper';
 
@@ -53,7 +54,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     return startRangeCondition && endRangeCondition;
   });
 
-  const loggedHours: number = filteredLogs.reduce((acc, log) => (acc += log.loggedTime), 0);
+  const loggedTotalTime = calculateTotalTime(filteredLogs);
 
   const getReportTemplateParams = () => {
     return {
@@ -84,7 +85,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         // Abort the method
         return;
       }
-      await ReportHelper.shareReport(selectedImage, loggedHours > 0 ? getReportTemplateParams() : undefined);
+      await ReportHelper.shareReport(selectedImage, loggedTotalTime.hours > 0 ? getReportTemplateParams() : undefined);
     } catch (error) {
       console.error('[shareImageReport] ', error);
     }
@@ -118,7 +119,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
           <Text variant="headlineSmall">{t('totalLogHours')}</Text>
           <View style={[commonStyles.row, commonStyles.alignItemsBaseline]}>
             <Text variant="displayMedium" style={styles.darkorangeText}>
-              {loggedHours}
+              {loggedTotalTime.hours}
             </Text>
             <Text variant="labelLarge"> {t('hrs')}</Text>
           </View>
@@ -148,8 +149,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       <Button
         icon={() => <MaterialCommunityIcons name="printer" size={34} color={colors.white} />}
         mode="contained"
-        style={[styles.reportButton, commonStyles.mT30, loggedHours <= 0 && styles.disabledButton]}
-        disabled={loggedHours <= 0}
+        style={[styles.reportButton, commonStyles.mT30, loggedTotalTime.hours <= 0 && styles.disabledButton]}
+        disabled={loggedTotalTime.hours <= 0}
         onPress={printReport}>
         <Text variant="titleLarge" style={{color: colors.white}}>
           {t('print')}
