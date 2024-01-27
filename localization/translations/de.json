@@ -40,6 +40,25 @@
     },
     "general": {
         "save": "Speichern",
-        "edit": "Bearbeiten"
+        "edit": "Bearbeiten",
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen"
+    },
+    "timeLog": {
+        "shortMin": "min",
+        "shortHours": "std",
+        "from": "von",
+        "to": "bis",
+        "date": "datum",
+        "pause": "pause",
+        "workingTime": "arbeitszeit",
+        "notes": "notizen",
+        "period": "zeitraum",
+        "newTimeLog": "Neues Zeitprotokoll",
+        "viewTimeLog": "Zeitprotokoll anzeigen",
+        "timeLog": "Zeitprotokoll",
+        "generatedFor": "Generiert für",
+        "reportGenerated": "Bericht erstellt am",
+        "loggedTime": "Protokollierte Zeit"
     }
 }

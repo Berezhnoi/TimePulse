@@ -40,6 +40,25 @@
     },
     "general": {
         "save": "Zapisz",
-        "edit": "Edytować"
+        "edit": "Edytować",
+        "add": "Dodaj",
+        "cancel": "Anuluj"
+    },
+    "timeLog": {
+        "shortMin": "min",
+        "shortHours": "godz.",
+        "from": "od",
+        "to": "do",
+        "date": "data",
+        "pause": "pauza",
+        "workingTime": "czas pracy",
+        "notes": "notatki",
+        "period": "okres",
+        "newTimeLog": "Nowy dziennik czasu",
+        "viewTimeLog": "Wyświetl dziennik czasu",
+        "timeLog": "Dziennik czasu",
+        "generatedFor": "Generowane dla",
+        "reportGenerated": "Raport wygenerowany",
+        "loggedTime": "Zalogowany czas"
     }
 }

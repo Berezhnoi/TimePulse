@@ -40,6 +40,25 @@
     },
     "general": {
         "save": "Save",
-        "edit": "Edit"
+        "edit": "Edit",
+        "add": "Add",
+        "cancel": "Cancel"
+    },
+    "timeLog": {
+        "shortMin": "min",
+        "shortHours": "h",
+        "from": "from",
+        "to": "to",
+        "date": "date",
+        "pause": "pause",
+        "workingTime": "working time",
+        "notes": "notes",
+        "period": "period",
+        "newTimeLog": "New Time Log",
+        "viewTimeLog": "View Time Log",
+        "timeLog": "Time Log",
+        "generatedFor": "Generated for",
+        "reportGenerated": "Report generated on",
+        "loggedTime": "Logged Time"
     }
 }

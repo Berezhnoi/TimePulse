@@ -40,6 +40,25 @@
     },
     "general": {
         "save": "Сохранить",
-        "edit": "Редактировать"
+        "edit": "Редактировать",
+        "add": "Добавить",
+        "cancel": "Отмена"
+    },
+    "timeLog": {
+        "shortMin": "мин",
+        "shortHours": "ч",
+        "from": "от",
+        "to": "до",
+        "date": "дата",
+        "pause": "пауза",
+        "workingTime": "рабочее время",
+        "notes": "заметки",
+        "period": "период",
+        "newTimeLog": "Создать отчет",
+        "viewTimeLog": "Просмотреть отчет",
+        "timeLog": "Журнал времени",
+        "generatedFor": "Сгенерировано для",
+        "reportGenerated": "Отчет сгенерирован",
+        "loggedTime": "Зарегистрированное время"
     }
 }

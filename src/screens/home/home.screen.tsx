@@ -58,7 +58,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   const getReportTemplateParams = () => {
     return {
-      title: 'Time Log',
+      title: t('timeLog', {keyPrefix: 'timeLog'}),
       fromDate: timeRange.startDate,
       toDate: timeRange.endDate,
       generatedDate: new Date(),

@@ -13,8 +13,9 @@ import {TimeRangePickerProps} from './time-range-picker.types';
 import {commonStyles} from 'styles';
 import styles from './time-range-picker.styles';
 
-const TimeRangePickerAndroid: React.FC<Pick<TimeRangePickerProps, 'time' | 'onChange' | 'editable'>> = ({
+const TimeRangePickerAndroid: React.FC<Pick<TimeRangePickerProps, 'time' | 'onChange' | 'editable' | 'toText'>> = ({
   time,
+  toText = 'to',
   editable = true,
   onChange,
 }) => {
@@ -55,7 +56,7 @@ const TimeRangePickerAndroid: React.FC<Pick<TimeRangePickerProps, 'time' | 'onCh
       </TouchableOpacity>
 
       <View style={styles.delimiter}>
-        <Text style={commonStyles.text}>bis</Text>
+        <Text style={commonStyles.text}>{toText}</Text>
       </View>
 
       <TouchableOpacity

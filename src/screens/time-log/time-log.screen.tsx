@@ -14,6 +14,7 @@ import TimeRangePicker from 'components/time-range-picker';
 
 // Hooks
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 import {useAppDispatch, useAppSelector} from 'store';
 
 // Actions
@@ -21,7 +22,7 @@ import {addTimeLog} from 'store/slices/timeLogsSlice';
 
 // Utils
 import {TimeLogDTO} from 'utils/TimeLogDTO';
-import {minutesToMilliseconds} from 'utils';
+import {capitalize, minutesToMilliseconds} from 'utils';
 
 // Config
 import {SCREENS, DATE_FORMAT, PAUSE_IN_MIN} from 'config';
@@ -35,6 +36,8 @@ import styles from './time-log.styles';
 
 const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
   const insets = useSafeAreaInsets();
+
+  const {t} = useTranslation('translation');
 
   const dispatch = useAppDispatch();
 
@@ -145,12 +148,12 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
           onPress={onCancel}>
           <MaterialCommunityIcons name="arrow-left" size={26} />
         </TouchableOpacity>
-        <Text style={styles.title}>New Time Log</Text>
+        <Text style={styles.title}>{t('timeLog.newTimeLog')}</Text>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>
-          Date <Text style={commonStyles.required}>*</Text>
+          {capitalize(t('timeLog.date'))} <Text style={commonStyles.required}>*</Text>
         </Text>
         <TouchableOpacity activeOpacity={1} onPress={Platform.OS === 'android' ? showCalendar : undefined}>
           <TextInput
@@ -163,9 +166,9 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
 
       <View>
         <Text style={styles.label}>
-          Arbeitszeit <Text style={commonStyles.required}>*</Text>
+          {capitalize(t('timeLog.workingTime'))} <Text style={commonStyles.required}>*</Text>
         </Text>
-        <TimeRangePicker time={workTime} onChange={values => setWorkTime(values)} />
+        <TimeRangePicker time={workTime} toText={t('timeLog.to')} onChange={values => setWorkTime(values)} />
         <View style={[commonStyles.rowWrap, commonStyles.justifyContentSpaceBetween]}>
           <HelperText type="error" visible={touched.workTimeFrom && hasFieldError('workTimeFrom')} padding="none">
             {errors.workTimeFrom}
@@ -177,9 +180,13 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.label}>Pause</Text>
+        <Text style={styles.label}>{capitalize(t('timeLog.pause'))} </Text>
         <View style={[commonStyles.row]}>
-          <TextInput value={isPauseOn ? `${PAUSE_IN_MIN} min` : '-'} editable={false} style={styles.pauseInput} />
+          <TextInput
+            value={isPauseOn ? `${PAUSE_IN_MIN} ${t('timeLog.shortMin')}` : '-'}
+            editable={false}
+            style={styles.pauseInput}
+          />
           <Switch
             value={isPauseOn}
             onValueChange={() => setIsPauseOn(prevState => !prevState)}
@@ -189,7 +196,7 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.label}>Notes</Text>
+        <Text style={styles.label}>{capitalize(t('timeLog.notes'))}</Text>
         <TextInput
           value={notes}
           onChangeText={text => setNotes(text)}
@@ -202,10 +209,10 @@ const TimeLogScreen: React.FC<TimeLogScreenProps> = ({navigation}) => {
 
       <View style={[commonStyles.row]}>
         <Button mode="contained" style={styles.addTimeLogButton} onPress={onSubmit}>
-          Add
+          {t('general.add')}
         </Button>
         <Button mode="contained" style={styles.cancelButton} onPress={onCancel}>
-          Cancel
+          {t('general.cancel')}
         </Button>
       </View>
 

@@ -6,8 +6,11 @@ import dayjs from 'dayjs';
 import {Text, View} from 'react-native';
 import {Avatar, IconButton} from 'react-native-paper';
 
+// Hooks
+import {useTranslation} from 'react-i18next';
+
 // Utils
-import {calculateLogTime, millisecondsToMinutes} from 'utils';
+import {calculateLogTime, capitalize, millisecondsToMinutes} from 'utils';
 
 // Types
 import {TimesheetListItemProps} from './timesheet-list-item.types';
@@ -17,6 +20,8 @@ import {commonStyles} from 'styles';
 import styles from './timesheet-list-item.styles';
 
 const TimesheetListItem: React.FC<TimesheetListItemProps> = ({item, onPress}) => {
+  const {t} = useTranslation('translation');
+
   const {hours, minutes} = calculateLogTime(item);
 
   const displayDate = (date?: number): string => {
@@ -31,13 +36,13 @@ const TimesheetListItem: React.FC<TimesheetListItemProps> = ({item, onPress}) =>
           {hours > 0 && (
             <>
               <Text style={styles.title}>{hours}</Text>
-              <Text>h</Text>
+              <Text>{t('timeLog.shortHours')}</Text>
             </>
           )}
           {minutes > 0 && (
             <>
               <Text style={styles.title}> {minutes}</Text>
-              <Text>min</Text>
+              <Text>{t('timeLog.shortMin')}</Text>
             </>
           )}
         </Text>
@@ -54,7 +59,9 @@ const TimesheetListItem: React.FC<TimesheetListItemProps> = ({item, onPress}) =>
   const renderPause = (): JSX.Element => {
     return (
       <View style={[commonStyles.row, commonStyles.justifyContentFlexEnd]}>
-        <Text style={[commonStyles.text, styles.pauseContainer]}>Pause {millisecondsToMinutes(item.pause)} min</Text>
+        <Text style={[commonStyles.text]}>
+          {capitalize(t('timeLog.pause'))} {millisecondsToMinutes(item.pause)} {t('timeLog.shortMin')}
+        </Text>
       </View>
     );
   };

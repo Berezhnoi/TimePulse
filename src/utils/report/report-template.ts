@@ -2,9 +2,10 @@
 import {format} from 'date-fns';
 import {de} from 'date-fns/locale';
 import dayjs from 'dayjs';
+import i18next from 'i18next';
 
 // Utils
-import {calculateLogTime, millisecondsToMinutes} from 'utils';
+import {calculateLogTime, capitalize, millisecondsToMinutes} from 'utils';
 
 // Types
 import {TimeLog} from 'types/models/time-log';
@@ -21,18 +22,18 @@ export const renderReportTemplate = (params: ReportTemplateParams): string => {
     <body>
       <h2>${params.title}</h2>
       <p>
-        <strong>Period from:</strong> 
-        ${displayDate(params.fromDate)} <strong>to:</strong> ${displayDate(params.toDate)}
+        <strong>${i18next.t('timeLog.period')} ${i18next.t('timeLog.from')}:</strong> 
+        ${displayDate(params.fromDate)} <strong>${i18next.t('timeLog.to')}:</strong> ${displayDate(params.toDate)}
       </p>
 
       ${renderTable(params.logs)}
 
       <p>
-        <strong>Generated for:</strong> ${params.generatedFor}
+        <strong>${i18next.t('timeLog.generatedFor')}:</strong> ${params.generatedFor}
       </p>
 
       <footer>
-        <b>Report generated</b> on: ${displayDate(params.generatedDate)}
+        <b>${i18next.t('timeLog.reportGenerated')}</b>: ${displayDate(params.generatedDate)}
       </footer>
     </body>
   </html>
@@ -51,11 +52,11 @@ const displayTotalLogTime = (log: TimeLog): string => {
   let text = '';
 
   if (hours > 0) {
-    text = `${hours} h`;
+    text = `${hours} ${i18next.t('timeLog.shortHours')}`;
   }
 
   if (minutes > 0) {
-    text = text.concat(` ${minutes} min`);
+    text = text.concat(` ${minutes} ${i18next.t('timeLog.shortMin')}`);
   }
 
   return text;
@@ -68,12 +69,12 @@ const displayPause = (pause: number): string => {
 const renderTable = (logs: ReportTemplateParams['logs']): string => `
   <table>
     <tr>
-      <th>Logged Date</th>
-      <th>From</th>
-      <th>To</th>
-      <th>Pause</th>
-      <th>Logged Time</th>
-      <th>Notes</th>
+      <th>${capitalize(i18next.t('timeLog.date'))}</th>
+      <th>${capitalize(i18next.t('timeLog.from'))}</th>
+      <th>${capitalize(i18next.t('timeLog.to'))}</th>
+      <th>${capitalize(i18next.t('timeLog.pause'))}</th>
+      <th>${i18next.t('timeLog.loggedTime')}</th>
+      <th>${capitalize(i18next.t('timeLog.notes'))}</th>
     </tr>
 
     ${logs

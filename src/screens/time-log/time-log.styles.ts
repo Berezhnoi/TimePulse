@@ -19,11 +19,11 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   addTimeLogButton: {
-    width: 85,
+    minWidth: 85,
     backgroundColor: colors.orangered,
   },
   cancelButton: {
-    width: 100,
+    minWidth: 100,
     marginLeft: 15,
   },
   backButton: {

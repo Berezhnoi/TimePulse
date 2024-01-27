@@ -11,6 +11,17 @@ export const uniqueId = (): string => {
   return dateString + randomness;
 };
 
+export const isString = (value: any): boolean => {
+  return typeof value === 'string' || value instanceof String;
+};
+
+export function capitalize(str: string): string {
+  // if the passed value is not a string, return the passed value
+  if (!isString(str)) return str;
+
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 /**
  * Convert minutes to milliseconds.
  *

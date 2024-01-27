@@ -12,13 +12,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 // Hooks
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useTranslation} from 'react-i18next';
 import {useAppSelector} from 'store';
 
 // Actions
 import {geLogById} from 'store/slices/timeLogsSlice';
 
 // Utils
-import {millisecondsToMinutes} from 'utils';
+import {capitalize, millisecondsToMinutes} from 'utils';
 
 // Types
 import {ViewLogScreenProps} from './view-log.types';
@@ -29,6 +30,8 @@ import styles from './view-log.styles';
 
 const ViewLogScreen: React.FC<ViewLogScreenProps> = ({navigation, route}) => {
   const insets = useSafeAreaInsets();
+
+  const {t} = useTranslation('translation');
 
   const logData = useAppSelector(state => geLogById(state, route.params.logId));
 
@@ -58,33 +61,37 @@ const ViewLogScreen: React.FC<ViewLogScreenProps> = ({navigation, route}) => {
           onPress={() => navigation.goBack()}>
           <MaterialCommunityIcons name="arrow-left" size={26} />
         </TouchableOpacity>
-        <Text style={styles.title}>View Log</Text>
+        <Text style={styles.title}>{t('timeLog.viewTimeLog')}</Text>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>
-          Date <Text style={commonStyles.required}>*</Text>
+          {capitalize(t('timeLog.date'))} <Text style={commonStyles.required}>*</Text>
         </Text>
         <TextInput value={formatedDate} editable={false} />
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>
-          Arbeitszeit <Text style={commonStyles.required}>*</Text>
+          {capitalize(t('timeLog.workingTime'))} <Text style={commonStyles.required}>*</Text>
         </Text>
-        <TimeRangePicker time={workTime} editable={false} />
+        <TimeRangePicker time={workTime} toText={t('timeLog.to')} editable={false} />
       </View>
 
       {logData && logData.pause > 0 && (
         <View style={styles.section}>
-          <Text style={styles.label}>Pause</Text>
-          <TextInput value={`${millisecondsToMinutes(logData.pause)} min`} editable={false} style={styles.pauseInput} />
+          <Text style={styles.label}>{capitalize(t('timeLog.pause'))}</Text>
+          <TextInput
+            value={`${millisecondsToMinutes(logData.pause)} ${t('timeLog.shortMin')}`}
+            editable={false}
+            style={styles.pauseInput}
+          />
         </View>
       )}
 
       {logData?.notes && logData.notes.length > 0 && (
         <View style={styles.section}>
-          <Text style={styles.label}>Notes</Text>
+          <Text style={styles.label}>{capitalize(t('timeLog.notes'))}</Text>
           <TextInput
             value={logData.notes}
             editable={false}

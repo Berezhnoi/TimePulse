@@ -40,6 +40,25 @@
     },
     "general": {
         "save": "Uložiť",
-        "edit": "Upraviť"
+        "edit": "Upraviť",
+        "add": "Pridať",
+        "cancel": "Zrušiť"
+    },
+    "timeLog": {
+        "shortMin": "min",
+        "shortHours": "h",
+        "from": "od",
+        "to": "do",
+        "date": "dátum",
+        "pause": "prestávka",
+        "workingTime": "pracovný čas",
+        "notes": "poznámky",
+        "period": "obdobie",
+        "newTimeLog": "Nový časový záznam",
+        "viewTimeLog": "Zobraziť časový záznam",
+        "timeLog": "Časový záznam",
+        "generatedFor": "Generované pre",
+        "reportGenerated": "Správa vygenerovaná",
+        "loggedTime": "Zalogovaný čas"
     }
 }

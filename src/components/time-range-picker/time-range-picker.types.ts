@@ -1,5 +1,6 @@
 export interface TimeRangePickerProps {
   time: TimeRange;
+  toText?: string;
   onChange?: (values: TimeRange) => void;
   editable?: boolean;
 }

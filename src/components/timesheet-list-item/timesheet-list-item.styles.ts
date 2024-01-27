@@ -9,9 +9,6 @@ const styles = StyleSheet.create({
   primaryText: {
     color: colors.primaryBlue,
   },
-  pauseContainer: {
-    width: 100,
-  },
 });
 
 export default styles;
